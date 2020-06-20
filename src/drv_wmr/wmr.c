@@ -206,15 +206,25 @@ static int config_command_sync(hid_device* hmd_imu, unsigned char type,
 			       unsigned char* buf, int len)
 {
 	unsigned char cmd[64] = { 0x02, type };
-
+        int size=0;
 	hid_write(hmd_imu, cmd, sizeof(cmd));
-	do {
-		int size = hid_read(hmd_imu, buf, len);
-		if (size == -1)
-			return -1;
-		if (buf[0] == HOLOLENS_IRQ_CONTROL)
-			return size;
-	} while (buf[0] == HOLOLENS_IRQ_SENSORS || buf[0] == HOLOLENS_IRQ_DEBUG);
+
+        for (;;) {
+            size = hid_read(hmd_imu, buf, len);
+            if (size == -1)
+            	return -1;
+            if (buf[0] == HOLOLENS_IRQ_CONTROL)
+            	return size;
+            if (buf[0] == HOLOLENS_IRQ_SENSORS)
+                continue;
+            if (buf[0] == HOLOLENS_IRQ_DEBUG)
+                continue;
+            LOGE("Unrecognized Command");
+            for (int i = 0; i<size; i++) {
+                LOGE("Unrecognized Command: %d", buf[i]);
+            }
+        }
+
 
 	return -1;
 }
