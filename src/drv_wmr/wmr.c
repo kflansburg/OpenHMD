@@ -396,7 +396,7 @@ static ohmd_device* open_device(ohmd_driver* driver, ohmd_device_desc* desc)
                         reverb = true;
 		}
 		if (strncmp(hdr->name,
-			    "HP Reverb VR Headset VR1000-2xxx", 64) == 0) {
+			    "Samsung Windows Mixed Reality 800ZBA", 64) == 0) {
                         odyssey = true;
 		}
 
