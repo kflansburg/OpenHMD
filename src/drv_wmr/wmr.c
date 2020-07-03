@@ -364,7 +364,7 @@ static ohmd_device* open_device(ohmd_driver* driver, ohmd_device_desc* desc)
 	wmr_priv* priv = ohmd_alloc(driver->ctx, sizeof(wmr_priv));
 	unsigned char *config;
 	bool samsung = false;
-	bool odyssey = false;
+	bool odyssey = true;
 	bool reverb = false;
 
 	if(!priv)
